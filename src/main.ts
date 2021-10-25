@@ -1,5 +1,9 @@
-import { createApp } from 'vue'
+import { ViteSSG } from 'vite-ssg'
+import routes from "virtual:generated-pages";
 import App from './App.vue'
 import './index.css'
 
-createApp(App).mount('#app')
+export const createApp = ViteSSG(
+    App,
+    { routes },
+)
