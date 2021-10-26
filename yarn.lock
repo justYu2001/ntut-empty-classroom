@@ -355,7 +355,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/compiler-sfc@npm:3.2.20, @vue/compiler-sfc@npm:^3.2.20":
+"@vue/compiler-sfc@npm:3.2.20, @vue/compiler-sfc@npm:^3.2.20, @vue/compiler-sfc@npm:^3.2.4":
   version: 3.2.20
   resolution: "@vue/compiler-sfc@npm:3.2.20"
   dependencies:
@@ -3895,6 +3895,7 @@ resolve@^1.20.0:
     vite: ^2.4.4
     vite-plugin-eslint: ^1.3.0
     vite-plugin-pages: ^0.18.1
+    vite-plugin-vue-layouts: ^0.5.0
     vite-ssg: ^0.15.5
     vue: next
     vue-router: 4
@@ -4585,6 +4586,21 @@ typescript@^4.3.2:
     "@vue/compiler-sfc":
       optional: true
   checksum: 5ddcaa5caf14127b87a80e9029c0ba7188af72dd00eeff9fea4ffe23253f0aecc717f5881a19b53825f7133978435c303317e3949509f9d3f49ff1676390b819
+  languageName: node
+  linkType: hard
+
+"vite-plugin-vue-layouts@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "vite-plugin-vue-layouts@npm:0.5.0"
+  dependencies:
+    "@vue/compiler-sfc": ^3.2.4
+    debug: ^4.3.2
+    fast-glob: ^3.2.7
+  peerDependencies:
+    vite: ^2.5.0
+    vue: ^2.6.12 || ^3.2.4
+    vue-router: ^3.5.1 || ^ 4.0.11
+  checksum: 3045d8f99fdaabbc93b0b22bdfcab12936a28bd1fc1f651a1059c1ab381c925c69ce5ece50d10fda98dca7fadde31bb6df2a601066ceac0703d4245b5c3bbed9
   languageName: node
   linkType: hard
 
