@@ -3,6 +3,7 @@ import eslintPlugin from 'vite-plugin-eslint';
 import Pages from 'vite-plugin-pages';
 import Layouts from 'vite-plugin-vue-layouts';
 import Components from 'unplugin-vue-components/vite';
+import svgLoader from 'vite-svg-loader';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 
@@ -14,6 +15,11 @@ export default defineConfig({
     Components(),
     Pages(),
     Layouts(),
+    svgLoader({
+      svgoConfig: {
+        multipass: true
+      }
+    }),
   ],
   resolve: {
     alias: {
@@ -23,5 +29,5 @@ export default defineConfig({
   ssgOptions: {
     script: 'async',
     formatting: 'minify',
-  }
+  },
 })
