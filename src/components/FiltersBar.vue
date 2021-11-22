@@ -1,6 +1,6 @@
 <template>
     <div ref="filter" class="border-t-4 border-gray-100 pt-3 pb-2.5 w-4/5 m-auto bg-white">
-        <ul class="grid grid-cols-4-72-1fr gap-2.5 md:grid-cols-7 grid-rows-2">
+        <ul class="grid grid-cols-auto-fill-70-1fr gap-2.5 md:grid-cols-7 grid-rows-2 md:grid-rows-1 md: p-2">
             <li v-for="tab in filterTabs" :key="tab" 
                 :class="{
                             unfocus: !filters.includes(tab),

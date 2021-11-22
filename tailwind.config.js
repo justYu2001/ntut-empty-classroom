@@ -10,7 +10,7 @@ module.exports = {
         'noto-sans': ['Noto Sans TC', 'sans-serif'],
       },
       gridTemplateColumns: {
-        '4-72-1fr': 'repeat(4, minmax(72px, 1fr))'
+        'auto-fill-70-1fr': 'repeat(auto-fill, minmax(70px, 1fr))'
       },
     },
   },

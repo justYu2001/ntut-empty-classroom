@@ -18,7 +18,7 @@
             }">
             <router-link to="/installation" class="navbar-link">手機版安裝</router-link>
             <router-link to="/bug" class="navbar-link">問題回報</router-link>
-            <router-link to="/feedbakc" class="navbar-link">意見回饋</router-link>
+            <router-link to="/feedback" class="navbar-link">意見回饋</router-link>
         </nav>
     </header>
 </template>

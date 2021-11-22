@@ -1,9 +1,14 @@
 <template>
+	<ClassroomInfoModal :isShow="isShowModal" 
+						:classroom="classroomDataOfInfoModal"
+						@closeModal="closeInfoModal"
+						/>
 	<SearchBar @updateKeyword="updateKeyword" />
 	<FiltersBar @updateCondition="updateFilters" />
 	<ul class="w-4/5 m-auto">
 		<li v-for="classroom in filteredClassroomList" :key="classroom.id"
-            class="px-2.5 py-1.5 font-bold border-b border-gray-300 cursor-pointer transition-colors duration-300 hover:text-purple-500">
+			@click="openInfoModal(classroom)"
+            class="px-2.5 py-1.5 font-bold border-t border-gray-300 cursor-pointer transition-colors duration-300 hover:text-purple-500">
 			{{ classroom.abbreviation }}
 		</li>
 	</ul>
@@ -20,7 +25,6 @@ import { Classroom } from '@/types';
 export default defineComponent({
 	name: 'Home',
 	setup() {
-
 		const filters = ref(['一教', '二教', '三教', '四教', '五教', '六教']);
 
 		const updateFilters = (newFilters: string[]) => filters.value = newFilters;
@@ -128,11 +132,31 @@ export default defineComponent({
 		watch(filters, searchClassroom, { deep: true });
 		watch(keyword, searchClassroom);
 
+		const isShowModal = ref(false);
+
+		const classroomDataOfInfoModal = ref({
+			id: '',
+			name: '',
+			abbreviation: '',
+			availableTime: [],
+		}) as Ref<Classroom>;
+
+		const openInfoModal = (classroom: Classroom) => {
+			classroomDataOfInfoModal.value = classroom;
+			isShowModal.value = true;
+		}
+
+		const closeInfoModal = () => isShowModal.value = false;
+
 		return {
 			updateFilters,
 			updateKeyword,
 			filteredClassroomList,
 			searchClassroom,
+			isShowModal,
+			classroomDataOfInfoModal,
+			openInfoModal,
+			closeInfoModal,
 		}
   }
 })
