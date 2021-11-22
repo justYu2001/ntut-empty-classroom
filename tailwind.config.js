@@ -9,6 +9,9 @@ module.exports = {
       fontFamily: {
         'noto-sans': ['Noto Sans TC', 'sans-serif'],
       },
+      gridTemplateColumns: {
+        '4-72-1fr': 'repeat(4, minmax(72px, 1fr))'
+      },
     },
   },
   plugins: [],

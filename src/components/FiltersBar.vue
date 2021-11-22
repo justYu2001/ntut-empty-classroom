@@ -1,12 +1,12 @@
 <template>
     <div ref="filter" class="border-t-4 border-gray-100 pt-3 pb-2.5 w-4/5 m-auto bg-white">
-        <ul class="flex flex-wrap px-2 lg:px-0">
+        <ul class="grid grid-cols-4-72-1fr gap-2.5 md:grid-cols-7 grid-rows-2">
             <li v-for="tab in filterTabs" :key="tab" 
                 :class="{
                             unfocus: !filters.includes(tab),
                             focus: filters.includes(tab), 
                         }"
-                class="py-1 px-5 lg:px-4 text-sm font-bold cursor-pointer rounded-full mr-2.5 mb-2.5 min-w-max"
+                class="py-1 text-center text-sm font-bold cursor-pointer rounded-full min-w-max"
                 @click="updateFilters(tab)"
                 >{{ tab }}
             </li>

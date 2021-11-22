@@ -3,7 +3,7 @@
         <h1>
             <router-link to="/" class="text-3xl">北科空教室</router-link>
         </h1>
-        <div class="relative z-10 lg:hidden" @click="toggleMenu">
+        <div class="relative z-10 md:hidden" @click="toggleMenu">
             <div class="bar top-bar" :class="{ ['top-bar-active']: menuActive }">
             </div>
             <div class="bar middle-bar transition-all duration-300 delay-300" :class="{ ['middle-bar-active']: menuActive }"></div>
@@ -11,7 +11,7 @@
                 :class="{ ['bottom-bar-active']: menuActive }">
             </div>
         </div>
-        <nav class="bg-purple-500 lg:bg-white fixed lg:relative top-0 left-0 lg:left-auto w-full lg:w-auto h-screen lg:h-auto flex flex-col lg:flex-row pt-16 lg:pt-0 transition-all duration-700 ease-out lg:show-menu"
+        <nav class="bg-purple-500 md:bg-white fixed md:relative top-0 left-0 md:left-auto w-full md:w-auto h-screen md:h-auto flex flex-col md:flex-row pt-16 md:pt-0 transition-all duration-700 ease-out md:show-menu"
             :class="{
                 ['hide-menu']: !menuActive,
                 ['show-menu']: menuActive,
@@ -53,7 +53,7 @@ export default defineComponent({
     @tailwind utilities;
 
     .navbar-link {
-        @apply text-base text-center text-white lg:text-black px-1 py-4 lg:py-0 transition-colors duration-300 hover:text-purple-500;
+        @apply text-base text-center text-white md:text-black px-1 py-4 md:py-0 transition-colors duration-300 hover:text-purple-500;
     }
 
     .bar {
