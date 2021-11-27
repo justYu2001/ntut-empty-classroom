@@ -4,3 +4,8 @@ export interface Classroom {
     name: string;
     availableTime: string[];
 }
+
+export interface GithubIssue {
+    title: string;
+    body: string;
+}
