@@ -2,11 +2,23 @@
     <h3 class="py-1">
         <label for="title" class="text-2xl font-medium font-noto-sans cursor-pointer block">標題</label>
     </h3>
-    <input id="title" class="border-2 border-gray-300 rounded focus:outline-none w-full p-1 transition duration-300 focus:border-purple-500" type="text" v-model="title">
+    <input id="title" 
+           class="border-2 border-gray-300 rounded focus:outline-none w-full p-1 transition duration-300 focus:border-purple-500" 
+           type="text"
+           @keydown.prevent.enter="focusTextarea"
+           v-model="title"
+           enterkeyhint="next"
+    >
     <h3 class="py-1 cursor-pointer">
         <label for="content" class="text-2xl font-medium font-noto-sans cursor-pointer block">內容</label>
     </h3>
-    <textarea id="content" class="border-2 border-gray-300 rounded focus:outline-none w-full p-1 h-40 transition duration-300 resize-none focus:border-purple-500" v-model="content"></textarea>
+    <textarea id="content" 
+              class="border-2 border-gray-300 rounded focus:outline-none w-full p-1 h-40 transition duration-300 resize-none focus:border-purple-500" 
+              @keydown.prevent.enter="submitGithubIssueData"
+              ref="textarea"
+              v-model="content"
+              enterkeyhint="send">
+    </textarea>
     <div class="flex flex-col items-end py-2">
         <button class="bg-purple-500 rounded py-1 px-3 mb-1 text-white font-bold disabled:opacity-75"
                 ref="button"
@@ -37,6 +49,10 @@ export default defineComponent({
         const content = ref('');
         const issueType = computed(() => props.issueType);
 
+        const textarea = ref() as Ref<HTMLTextAreaElement>;
+
+        const focusTextarea = () => textarea.value.focus();
+
         const message = ref('');
         const isSuccessfulSubmit = ref(false);
 
@@ -46,6 +62,7 @@ export default defineComponent({
         const issueAPIURL = issueAPIURLPrefix + issueType.value;
 
         const submitGithubIssueData = async () => {
+            textarea.value.blur();
             button.value.disabled = true;
 
             const formData: GithubIssue = {
@@ -79,7 +96,10 @@ export default defineComponent({
             }
 
             setTimeout(() => message.value = '', 3000);
+
         }
+
+        
 
         return {
             title,
@@ -88,6 +108,8 @@ export default defineComponent({
             message,
             isSuccessfulSubmit,
             button,
+            textarea,
+            focusTextarea,
         }
     },
 })

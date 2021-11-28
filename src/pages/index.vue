@@ -5,7 +5,7 @@
 						/>
 	<SearchBar @updateKeyword="updateKeyword" />
 	<FiltersBar @updateCondition="updateFilters" />
-	<ul class="w-4/5 m-auto">
+	<ul class="w-4/5 m-auto pt-60">
 		<li v-for="classroom in filteredClassroomList" :key="classroom.id"
 			@click="openInfoModal(classroom)"
             class="px-2.5 py-1.5 font-bold border-t border-gray-300 cursor-pointer transition-colors duration-300 hover:text-purple-500">

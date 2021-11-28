@@ -1,5 +1,9 @@
 <template>
-    <header class="relative z-10 flex justify-between items-center py-6 px-8 font-noto-sans font-medium bg-white">
+    <header class="z-10 flex justify-between items-center py-6 px-8 font-noto-sans font-medium bg-white"
+            :class="{
+                ['fixed top-0 w-full']: isInHomePage,
+                ['relative']: !isInHomePage,
+            }">
         <h1>
             <router-link to="/" class="text-3xl">北科空教室</router-link>
         </h1>
@@ -24,26 +28,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
     name: 'Header',
     setup() {
+        const route = useRoute();
+
+        const isInHomePage = computed(() => route.path === '/');
+
         const menuActive = ref(false);
 
         const toggleMenu = () => menuActive.value = !menuActive.value;
 
-        onMounted(() => {
-            window.addEventListener('scroll', () => {
-                const scrollPositionY = window.scrollY;
-                const header = document.querySelector('header') as HTMLElement;
-                header.style.transform = `translateY(${scrollPositionY}px)`;
-            });
-        });
-
         return {
             menuActive,
             toggleMenu,
+            isInHomePage,
         }
     },
 })

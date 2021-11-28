@@ -1,5 +1,5 @@
 <template>
-    <div ref="search" class="pt-4 pb-7 bg-white">
+    <div class="fixed top-21 w-full pt-4 pb-7 bg-white">
         <label class="bg-gray-50 px-2.5 py-0.5 shadow-md rounded-full flex items-center w-4/5 m-auto group">
             <input type="text" 
                    class="text-base px-1 py-1.5 bg-transparent flex-grow focus:outline-none peer"
@@ -13,7 +13,7 @@
 <script lang="ts">
 import SearchIcon from '@/assets/search.svg?component';
 
-import { defineComponent, ref, onMounted, Ref } from 'vue';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
     components: {
@@ -28,18 +28,8 @@ export default defineComponent({
             emit('updateKeyword', keyword);
         }
 
-        const search = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
-
-        onMounted(() => {
-            window.addEventListener('scroll', () => {
-                const scrollPositionY = window.scrollY;
-                search.value.style.transform = `translateY(${scrollPositionY}px)`;
-            });
-        });
-
         return {
             updateKeyword,
-            search,
         }
     },
 })
