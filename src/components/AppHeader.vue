@@ -16,9 +16,9 @@
                 ['hide-menu']: !menuActive,
                 ['show-menu']: menuActive,
             }">
-            <router-link to="/installation" class="navbar-link">手機版安裝</router-link>
-            <router-link to="/bug" class="navbar-link">問題回報</router-link>
-            <router-link to="/feedback" class="navbar-link">意見回饋</router-link>
+            <router-link to="/installation" class="navbar-link" @click="menuActive = false">手機版安裝</router-link>
+            <router-link to="/bug" class="navbar-link" @click="menuActive = false">問題回報</router-link>
+            <router-link to="/feedback" class="navbar-link" @click="menuActive = false">意見回饋</router-link>
         </nav>
     </header>
 </template>
