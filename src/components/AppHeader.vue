@@ -1,8 +1,10 @@
 <template>
-    <header class="z-10 flex justify-between items-center py-6 px-8 font-noto-sans font-medium bg-white"
+    <header class="flex justify-between items-center py-6 px-8 font-noto-sans font-medium bg-white"
             :class="{
                 ['fixed top-0 w-full']: isInHomePage,
                 ['relative']: !isInHomePage,
+                ['z-20']: menuActive,
+                ['z-10']: !menuActive,
             }">
         <h1>
             <router-link to="/" class="text-3xl">北科空教室</router-link>
@@ -20,16 +22,18 @@
                 ['hide-menu']: !menuActive,
                 ['show-menu']: menuActive,
             }">
-            <router-link to="/installation" class="navbar-link" @click="menuActive = false">手機版安裝</router-link>
-            <router-link to="/bug" class="navbar-link" @click="menuActive = false">問題回報</router-link>
-            <router-link to="/feedback" class="navbar-link" @click="menuActive = false">意見回饋</router-link>
+            <router-link to="/installation" class="navbar-link" @click="closeMenu">手機版安裝</router-link>
+            <router-link to="/bug" class="navbar-link" @click="closeMenu">問題回報</router-link>
+            <router-link to="/feedback" class="navbar-link" @click="closeMenu">意見回饋</router-link>
         </nav>
     </header>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { useMenuStore } from '@/store/menu';
+import { storeToRefs } from 'pinia';
 
 export default defineComponent({
     name: 'Header',
@@ -38,13 +42,15 @@ export default defineComponent({
 
         const isInHomePage = computed(() => route.path === '/');
 
-        const menuActive = ref(false);
+        const menu = useMenuStore();
+        const { menuActive } = storeToRefs(menu);
 
-        const toggleMenu = () => menuActive.value = !menuActive.value;
+        const { toggleMenu, closeMenu } = menu;
 
         return {
             menuActive,
             toggleMenu,
+            closeMenu,
             isInHomePage,
         }
     },

@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed inset-0 flex justify-center items-center z-10 transition-all duration-300"
+    <div class="fixed inset-0 flex justify-center items-center transition-all duration-300 z-20"
          :class="{
              ['opacity-0 pointer-events-none']: !isShowModal,
              ['opacity-100']: isShowModal,

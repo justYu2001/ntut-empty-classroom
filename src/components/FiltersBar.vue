@@ -1,13 +1,17 @@
 <template>
-    <div class="fixed top-42 w-full">
-        <div class="border-t-4 border-gray-100 pt-3 pb-2.5 w-4/5 m-auto bg-white">
-            <ul class="grid grid-cols-auto-fill-70-1fr gap-2.5 md:grid-cols-7 grid-rows-2 md:grid-rows-1 md: p-2">
+    <div class="fixed z-10 top-42 w-full transition-all"
+         :class="{
+             ['opacity-0 duration-100']: menuActive,
+             ['opacity-100 delay-200 duration-100 ease-in']: !menuActive,
+         }">
+        <div class="border-t-4 border-gray-100 pb-2.5 w-4/5 m-auto bg-white">
+            <ul class="flex flex-shrink-0 flex-grow-0 overflow-x-scroll overflow-y-hidden scrolling-touch no-scrollbar py-3 px-2 lg:px-0">
                 <li v-for="tab in filterTabs" :key="tab"
                     :class="{
                                 unfocus: !filters.includes(tab),
                                 focus: filters.includes(tab),
                             }"
-                    class="py-1 text-center text-sm font-bold cursor-pointer rounded-full min-w-max"
+                    class="py-1 px-5 box-content mr-2.5 text-sm lg:text-base font-bold cursor-pointer rounded-full min-w-max"
                     @click="updateFilters(tab)"
                     >{{ tab }}
                 </li>
@@ -18,6 +22,9 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { useMenuStore } from '@/store/menu';
+import { storeToRefs } from 'pinia';
+
 
 export default defineComponent({
     name: 'FiltersBar',
@@ -47,10 +54,14 @@ export default defineComponent({
             }
         };
 
+        const menu = useMenuStore();
+        const { menuActive } = storeToRefs(menu);
+
         return {
             filterTabs,
             filters,
             updateFilters,
+            menuActive,
         }
     },
 })

@@ -1035,6 +1035,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vue/devtools-api@npm:^6.0.0-beta.20.1":
+  version: 6.0.0-beta.20.1
+  resolution: "@vue/devtools-api@npm:6.0.0-beta.20.1"
+  checksum: e43f75415cfd84fcaf2f7c52752012c400aefe03fe95e0c41cdf31f16a0222d581ca8c575a9d7dc39b554430ecf2ff1a314eebd60c8a9313854fecf820ed59a9
+  languageName: node
+  linkType: hard
+
 "@vue/eslint-config-typescript@npm:^8.0.0":
   version: 8.0.0
   resolution: "@vue/eslint-config-typescript@npm:8.0.0"
@@ -4683,6 +4690,25 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"pinia@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "pinia@npm:2.0.4"
+  dependencies:
+    "@vue/devtools-api": ^6.0.0-beta.20.1
+    vue-demi: "*"
+  peerDependencies:
+    "@vue/composition-api": ^1.4.0
+    typescript: ^4.4.4
+    vue: ^2.6.14 || ^3.2.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+    typescript:
+      optional: true
+  checksum: 6f4ef61d8fe7d70df28a78c8591d00b61ab2570ee89a6ef713abff2b19ac622104ca5d19122978c7ce58f355c0cbbc95834a00b3252f527123dec68405a05c9d
+  languageName: node
+  linkType: hard
+
 "postcss-js@npm:^3.0.3":
   version: 3.0.3
   resolution: "postcss-js@npm:3.0.3"
@@ -5077,6 +5103,7 @@ resolve@^1.20.0:
     eslint: ^8.3.0
     eslint-plugin-vue: ^7.20.0
     firebase: ^9.1.3
+    pinia: ^2.0.4
     typescript: ^4.3.2
     unplugin-vue-components: ^0.16.0
     vitawind: ^1.2.7
@@ -6026,6 +6053,22 @@ typescript@^4.3.2:
   bin:
     vite: bin/vite.js
   checksum: 802b59c275ac099d6cfcf17636d1034cb6d3e7a363a33a4bf990cbe859059cec35249e958a26a59d5cfde3dbbbf207b8ac8817eb127063c96957d2e573389370
+  languageName: node
+  linkType: hard
+
+"vue-demi@npm:*":
+  version: 0.12.1
+  resolution: "vue-demi@npm:0.12.1"
+  peerDependencies:
+    "@vue/composition-api": ^1.0.0-rc.1
+    vue: ^3.0.0-0 || ^2.6.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+  bin:
+    vue-demi-fix: bin/vue-demi-fix.js
+    vue-demi-switch: bin/vue-demi-switch.js
+  checksum: d39a43e765e5bc34cf5b378ccff53a521e824f8c55aae6a9163c294364e8af593c5331b3b3b1b679b28096a3142abed5aed07e2dfb581c96f2eba88a176666f2
   languageName: node
   linkType: hard
 
