@@ -19,32 +19,25 @@
               v-model="content"
               enterkeyhint="send">
     </textarea>
-    <div class="flex flex-col items-end py-2">
+    <div class="flex justify-end py-2">
         <button class="bg-purple-500 rounded py-1 px-3 mb-1 text-white font-bold disabled:opacity-75"
                 ref="button"
                 @click="submitGithubIssueData"
                 >送出
         </button>
-        <p class="font-bold" 
-           :class="{
-               ['text-green-500']: isSuccessfulSubmit,
-               ['text-red-500']: !isSuccessfulSubmit,
-           }" 
-           v-if="message"
-           >{{ message }}
-        </p>
     </div>
 </template>
 
 <script lang="ts">
-import { GithubIssue } from '@/types';
+import { FormSubmitResult, GithubIssue } from '@/types';
 import { defineComponent, ref, computed, Ref } from 'vue';
 
 export default defineComponent({
     props: {
         issueType: String,
     },
-    setup(props) {
+    emits: ['submit'],
+    setup(props, { emit }) {
         const title = ref('');
         const content = ref('');
         const issueType = computed(() => props.issueType);
@@ -52,9 +45,6 @@ export default defineComponent({
         const textarea = ref() as Ref<HTMLTextAreaElement>;
 
         const focusTextarea = () => textarea.value.focus();
-
-        const message = ref('');
-        const isSuccessfulSubmit = ref(false);
 
         const button = ref() as Ref<HTMLButtonElement>;
 
@@ -80,33 +70,34 @@ export default defineComponent({
             });
 
             button.value.disabled = false;
+
+            const submitResult: FormSubmitResult = {
+                type: '',
+                message: '',
+            };
             
             if(response.status === 200) {
                 if(issueType.value === 'bug') {
-                    message.value = '提交成功！感謝回報';
+                    submitResult.message = '提交成功！感謝回報';
                 } else {
-                    message.value = '提交成功！感謝回饋';
+                    submitResult.message = '提交成功！感謝回饋';
                 }
-                isSuccessfulSubmit.value = true;
+                submitResult.type = 'success';
                 title.value = '';
                 content.value = '';
             } else {
-                isSuccessfulSubmit.value = false;
-                message.value = '提交失敗！請稍後再試';
+                submitResult.type = 'failed';
+                submitResult.message = '提交失敗！請稍後再試';
             }
 
-            setTimeout(() => message.value = '', 3000);
+            emit('submit', submitResult);
 
         }
-
-        
 
         return {
             title,
             content,
             submitGithubIssueData,
-            message,
-            isSuccessfulSubmit,
             button,
             textarea,
             focusTextarea,

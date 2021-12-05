@@ -9,3 +9,8 @@ export interface GithubIssue {
     title: string;
     body: string;
 }
+
+export interface FormSubmitResult {
+    type: string;
+    message: string;
+}
