@@ -1,11 +1,11 @@
 <template>
-    <div class="fixed z-10 top-42 w-full transition-all"
+    <div class="fixed z-10 top-51 w-full transition-all"
          :class="{
              ['opacity-0 duration-100']: menuActive,
              ['opacity-100 delay-200 duration-100 ease-in']: !menuActive,
          }">
-        <div class="border-t-4 border-gray-100 pb-2.5 w-4/5 m-auto bg-white">
-            <ul class="flex flex-shrink-0 flex-grow-0 overflow-x-scroll overflow-y-hidden scrolling-touch no-scrollbar py-3 px-2 lg:px-0">
+        <div class="w-4/5 m-auto bg-white">
+            <ul class="flex flex-shrink-0 flex-grow-0 overflow-x-scroll overflow-y-hidden scrolling-touch no-scrollbar py-3 px-2 lg:px-1">
                 <li v-for="tab in filterTabs" :key="tab"
                     :class="{
                                 unfocus: !filters.includes(tab),

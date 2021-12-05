@@ -9,9 +9,13 @@ module.exports = {
       fontFamily: {
         'noto-sans': ['Noto Sans TC', 'sans-serif'],
       },
+      spacing: {
+        '65': '16.25rem',
+      },
       inset: {
         '21': '5.25rem',
         '42': '10.5rem',
+        '51': '12.75rem',
       }
     },
   },

@@ -4,8 +4,9 @@
 						@closeModal="closeInfoModal"
 						/>
 	<SearchBar @updateKeyword="updateKeyword" />
+	<TabBar @updateTab="updateTab"/>
 	<FiltersBar @updateCondition="updateFilters" />
-	<ul class="w-4/5 m-auto pt-60">
+	<ul class="w-4/5 m-auto pt-65">
 		<li v-for="classroom in filteredClassroomList" :key="classroom.id"
 			@click="openInfoModal(classroom)"
             class="px-2.5 py-1.5 font-bold border-t border-gray-300 cursor-pointer transition-colors duration-300 hover:text-purple-500">
@@ -16,7 +17,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch, onMounted, Ref } from 'vue';
-import { query, where, getDocs } from 'firebase/firestore/lite';
+import { getDocs } from 'firebase/firestore/lite';
 
 import { db } from '@/modules/db';
 import { Classroom } from '@/types';
@@ -29,20 +30,6 @@ export default defineComponent({
 
 		const updateFilters = (newFilters: string[]) => filters.value = newFilters;
 
-		const getPeriod = () => {
-			const today = new Date();
-			const hour = today.getHours();
-			if(hour < 8 && hour > 22) {
-				return 'not schooltime';
-			} else {
-				return (hour - 8).toString();
-			}
-		}
-
-		const getDayString = () => {
-			const today = new Date();
-			return today.getDay().toString();
-		}
 
 		const compareChineseNumber = (a: string, b: string) => {
 			const orderOfChineseNumber = new Map([
@@ -70,12 +57,8 @@ export default defineComponent({
     
 		const getClassroomList = async () => {
 			const emptyClassroom = db.emptyClassroom;
-
-			const currentTime = getDayString() + getPeriod();
 			
-			const queryCondition = where('availableTime', 'array-contains', currentTime);
-			const queryRef = query(emptyClassroom, queryCondition);
-			const emptyClassroomSnapshot = await getDocs(queryRef);
+			const emptyClassroomSnapshot = await getDocs(emptyClassroom);
 			const emptyClassroomDocs = emptyClassroomSnapshot.docs;
 			return emptyClassroomDocs
                        .map((doc) => doc.data())
@@ -91,9 +74,41 @@ export default defineComponent({
 
 		const updateKeyword = (newKeyword: string) => keyword.value = newKeyword;
 
+		const getPeriod = () => {
+			const today = new Date();
+			const hour = today.getHours();
+			if(hour < 8 && hour > 22) {
+				return 'not schooltime';
+			} else {
+				return (hour - 8).toString();
+			}
+		}
+
+		const getDayString = () => {
+			const today = new Date();
+			return today.getDay().toString();
+		}
+
+		const currentTab = ref('目前時段');
+
+		const updateTab = (newTab: string) => currentTab.value = newTab;
+
+        const searchByTime = () => {
+			const currentTime = getDayString() + getPeriod();
+
+			if(currentTab.value === '目前時段') {
+				filteredClassroomList.value =
+					classroomList.value.filter((classroom) => {
+						return classroom.availableTime.includes(currentTime);
+					});
+			} else {
+				filteredClassroomList.value = classroomList.value;
+			}
+		}
+
 		const searchByCondition = () => {
 			filteredClassroomList.value = 
-				classroomList.value.filter((classroom) => {
+				filteredClassroomList.value.filter((classroom) => {
 					for (const condition of filters.value) {
 						if(classroom.abbreviation.includes(condition)) {
 							return true;
@@ -118,6 +133,7 @@ export default defineComponent({
 		}
 
 		const searchClassroom = () => {
+			searchByTime();
 			searchByCondition();
 			if(keyword.value !== '') {
 				searchByKeyword();
@@ -129,6 +145,7 @@ export default defineComponent({
 			searchClassroom();
 		});
 
+		watch(currentTab, searchClassroom);
 		watch(filters, searchClassroom, { deep: true });
 		watch(keyword, searchClassroom);
 
@@ -157,6 +174,7 @@ export default defineComponent({
 			classroomDataOfInfoModal,
 			openInfoModal,
 			closeInfoModal,
+			updateTab,
 		}
   }
 })
