@@ -1,8 +1,8 @@
 <template>
     <div class="fixed inset-0 flex justify-center items-center transition-all duration-300 z-20"
          :class="{
-             ['opacity-0 pointer-events-none']: !isShowModal,
-             ['opacity-100']: isShowModal,
+             ['opacity-0 pointer-events-none']: !isActiveModal,
+             ['opacity-100']: isActiveModal,
          }"
         >
         <div class="absolute inset-0 bg-black/50"
@@ -10,12 +10,12 @@
         </div>
         <div class="relative z-10 bg-white px-5 py-4 rounded transition-all duration-300"
             :class="{
-                ['scale-0']: !isShowModal,
-                ['scale-100']: isShowModal
+                ['scale-0']: !isActiveModal,
+                ['scale-100']: isActiveModal
             }">
             <h2 class="mb-2">
-                {{ classroomData.abbreviation }}
-                <small class="block font-bold">{{ classroomData.name }}</small>
+                {{ classroom.abbreviation }}
+                <small class="block font-bold">{{ classroom.name }}</small>
             </h2>
             <table>
                 <thead>
@@ -49,37 +49,52 @@
 import CheckIcon from '@/assets/check.svg?component';
 
 import { Classroom } from '@/types';
-import { defineComponent, computed, ComputedRef } from 'vue';
+import { defineComponent, ref, Ref } from 'vue';
+
+export interface ClassroomInfoModalAPI {
+    openModal: (data: Classroom) => void;
+}
 
 export default defineComponent({
     name: 'ClassroomInfoModal',
     components: { CheckIcon },
-    props: {
-        'classroom': Object,
-        'isShow': Boolean,
-    },
-    emits: ['closeModal'],
-    setup(props, { emit }) {
-        const isShowModal = computed(() => props.isShow);
+    setup(props, { expose }) {
+        const isActiveModal = ref(false);
 
-        const classroomData = computed(() => props.classroom) as ComputedRef<Classroom>;
+        const classroom = ref({
+            id:'',
+            abbreviation:'',
+            name:'',
+            availableTime:[],
+        }) as Ref<Classroom>;
 
         const isEmptyClassroom = (day: number, period: number) => {
             const time = day.toString() + period.toString();
-            return classroomData.value.availableTime.includes(time);
+            return classroom.value.availableTime.includes(time);
         }
 
-        const closeModal = () => emit('closeModal');
+        const openModal = (data: Classroom) => {
+            classroom.value = data;
+            isActiveModal.value = true;
+        }
+        
+        expose({
+            openModal,
+        } as ClassroomInfoModalAPI);
+
+        const closeModal = () => isActiveModal.value = false;
+
 
         const periodStrings = ['1', '2', '3', '4', '中午', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D'];
 
         return {
-            isShowModal,
-            classroomData,
+            isActiveModal,
+            classroom,
             isEmptyClassroom,
+            openModal,
             closeModal,
             periodStrings,
         }
     },
-})
+});
 </script>
