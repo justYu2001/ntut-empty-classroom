@@ -141,6 +141,13 @@ export default defineComponent({
 		onMounted(async () => {
 			classroomList.value = await getClassroomList();
 			searchClassroom();
+			window.setInterval(() => {
+				const currentTime = new Date();
+				
+				if(currentTime.getMinutes() === 0) {
+					searchClassroom();
+				}
+			}, 1000);
 		});
 
 		watch(currentTab, searchClassroom);
