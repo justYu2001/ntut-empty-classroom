@@ -147,7 +147,7 @@ export default defineComponent({
 				if(currentTime.getMinutes() === 0) {
 					searchClassroom();
 				}
-			}, 1000);
+			}, 60 * 1000);
 		});
 
 		watch(currentTab, searchClassroom);
